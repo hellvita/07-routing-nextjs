@@ -1,16 +1,20 @@
-import Link from "next/link";
+"use client";
+
+import { useRouter } from "next/navigation";
 import css from "./not-found.module.css";
 
 export default function NotFound() {
+  const router = useRouter();
+  const handleClick = () => router.back();
   return (
     <div className={css.container}>
       <h1 className={css.title}>404 - Page not found</h1>
       <p className={css.description}>
         Sorry, the page you are looking for does not exist.
       </p>
-      <Link href="/" className={css.btn}>
+      <button onClick={handleClick} className={css.btn}>
         Go back
-      </Link>
+      </button>
     </div>
   );
 }

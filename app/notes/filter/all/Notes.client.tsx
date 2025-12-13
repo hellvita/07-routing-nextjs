@@ -25,6 +25,7 @@ export default function NotesClient() {
       }),
     placeholderData: keepPreviousData,
     throwOnError: true,
+    staleTime: 60 * 1000,
   });
 
   const totalPages = data?.totalPages ?? 0;
