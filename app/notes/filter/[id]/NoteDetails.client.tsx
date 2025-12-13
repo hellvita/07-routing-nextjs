@@ -1,12 +1,13 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { fetchNoteById } from "@/lib/api";
 import Loading from "@/app/loading";
 import css from "./NoteDetails.module.css";
 
 export default function NoteDetailsClient() {
+  const router = useRouter();
   const { id } = useParams<{ id: string }>();
 
   const {
@@ -19,6 +20,8 @@ export default function NoteDetailsClient() {
     refetchOnMount: false,
   });
 
+  const handleBack = () => router.back();
+
   if (isLoading) return <Loading />;
 
   if (error || !note) throw error ? error : new Error("Data was not loaded");
@@ -28,14 +31,19 @@ export default function NoteDetailsClient() {
     : `Created at: ${note.createdAt}`;
 
   return (
-    <div className={css.container}>
-      <div className={css.item}>
-        <div className={css.header}>
-          <h2>{note.title}</h2>
+    <div className={css.content}>
+      <div className={css.container}>
+        <div className={css.item}>
+          <div className={css.header}>
+            <h2>{note.title}</h2>
+          </div>
+          <p className={css.content}>{note.content}</p>
+          <p className={css.date}>{formattedDate}</p>
         </div>
-        <p className={css.content}>{note.content}</p>
-        <p className={css.date}>{formattedDate}</p>
       </div>
+      <button onClick={handleBack} className={css.btn}>
+        {"<< "} back
+      </button>
     </div>
   );
 }
