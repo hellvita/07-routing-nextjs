@@ -9,19 +9,25 @@ import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import NoResultMessage from "@/components/NoResultMessage/NoResultMessage";
 import NoteList from "@/components/NoteList/NoteList";
+import { NoteTag } from "@/types/note";
 import css from "./Notes.module.css";
 
-export default function NotesClient() {
+interface NotesClientProps {
+  currentTag?: NoteTag;
+}
+
+export default function NotesClient({ currentTag }: NotesClientProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
   const { data, isSuccess } = useQuery({
-    queryKey: ["notes", currentPage, searchQuery],
+    queryKey: ["notes", currentPage, searchQuery, currentTag],
     queryFn: () =>
       fetchNotes({
         page: currentPage,
         search: searchQuery !== "" ? searchQuery : undefined,
+        tag: currentTag,
       }),
     placeholderData: keepPreviousData,
     throwOnError: true,

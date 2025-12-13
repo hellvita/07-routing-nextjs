@@ -1,5 +1,5 @@
 "use client";
-import css from "../all/Error.module.css";
+import css from "../filter/Error.module.css";
 
 interface ErrorProps {
   error: Error;
