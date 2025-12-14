@@ -13,6 +13,13 @@ export interface NewNote {
   tag: NoteTag;
 }
 
-export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+// export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+export type NoteTag = (typeof TAG_TYPES)[number];
 
-export const tagTypes = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
+export const TAG_TYPES = [
+  "Todo",
+  "Work",
+  "Personal",
+  "Meeting",
+  "Shopping",
+] as const;

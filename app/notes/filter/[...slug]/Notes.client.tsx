@@ -9,7 +9,8 @@ import Modal from "@/components/Modal/Modal";
 import NoteForm from "@/components/NoteForm/NoteForm";
 import NoResultMessage from "@/components/NoResultMessage/NoResultMessage";
 import NoteList from "@/components/NoteList/NoteList";
-import { NoteTag } from "@/types/note";
+import { notFound } from "next/navigation";
+import { NoteTag, TAG_TYPES } from "@/types/note";
 import css from "./Notes.module.css";
 
 interface NotesClientProps {
@@ -20,6 +21,11 @@ export default function NotesClient({ currentTag }: NotesClientProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+
+  const isValidRoute = (route: string | undefined): boolean =>
+    route ? (TAG_TYPES as readonly string[]).includes(route) : true;
+
+  if (!isValidRoute(currentTag)) notFound();
 
   const { data, isSuccess } = useQuery({
     queryKey: ["notes", currentPage, searchQuery, currentTag],
@@ -63,6 +69,9 @@ export default function NotesClient({ currentTag }: NotesClientProps) {
         <NoResultMessage invalidQuery={searchQuery} />
       )}
       {data && data.notes.length > 0 && <NoteList notes={data.notes} />}
+      {data && data.notes.length === 0 && currentTag && searchQuery === "" && (
+        <NoResultMessage invalidQuery={`the ${currentTag} tag`} />
+      )}
       {isModalOpen && (
         <Modal onClose={closeModal}>
           <NoteForm onClose={closeModal} />

@@ -1,4 +1,4 @@
-import { tagTypes } from "@/types/note";
+import { TAG_TYPES } from "@/types/note";
 import Link from "next/link";
 import css from "./SidebarNotes.module.css";
 
@@ -10,7 +10,7 @@ export default function SidebarNotes() {
           All notes
         </Link>
       </li>
-      {tagTypes.map((tag, index) => (
+      {TAG_TYPES.map((tag, index) => (
         <li key={index}>
           <Link href={`/notes/filter/${tag}`} className={css.menuLink}>
             {tag}
