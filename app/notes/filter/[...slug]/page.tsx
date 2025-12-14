@@ -18,8 +18,8 @@ export default async function Notes({ params }: NotesProps) {
   const tag = slug[0] === "all" ? undefined : slug[0];
 
   await queryClient.prefetchQuery({
-    queryKey: ["notes"],
-    queryFn: () => fetchNotes({}),
+    queryKey: ["notes", tag],
+    queryFn: () => fetchNotes({ tag }),
   });
 
   return (
