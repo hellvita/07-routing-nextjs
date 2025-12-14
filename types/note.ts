@@ -14,3 +14,5 @@ export interface NewNote {
 }
 
 export type NoteTag = "Todo" | "Work" | "Personal" | "Meeting" | "Shopping";
+
+export const tagTypes = ["Todo", "Work", "Personal", "Meeting", "Shopping"];
