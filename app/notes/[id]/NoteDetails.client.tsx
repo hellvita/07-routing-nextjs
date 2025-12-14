@@ -18,6 +18,7 @@ export default function NoteDetailsClient() {
     queryKey: ["note", id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
+    staleTime: 60 * 1000,
   });
 
   const handleBack = () => router.back();
@@ -31,7 +32,7 @@ export default function NoteDetailsClient() {
     : `Created at: ${note.createdAt}`;
 
   return (
-    <div className={css.content}>
+    <div className={css.wrapper}>
       <div className={css.container}>
         <div className={css.item}>
           <div className={css.header}>
