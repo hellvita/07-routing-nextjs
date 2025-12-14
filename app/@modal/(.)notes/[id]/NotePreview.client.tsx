@@ -2,13 +2,16 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { fetchNoteById } from "@/lib/api";
 import Loading from "@/app/loading";
-import ModalClient from "@/components/Modal/Modal.client";
+import Modal from "@/components/Modal/Modal";
 import css from "./NotePreview.module.css";
 
 export default function NotePreviewClient() {
   const { id } = useParams<{ id: string }>();
+  const router = useRouter();
+  const handleClose = () => router.back();
 
   const {
     data: note,
@@ -31,7 +34,7 @@ export default function NotePreviewClient() {
       : `Created at: ${note.createdAt}`;
 
   return (
-    <ModalClient>
+    <Modal onClose={handleClose}>
       {isLoading && <Loading />}
       {(error || !note) && !isLoading && (
         <p className={css.error}>
@@ -49,6 +52,6 @@ export default function NotePreviewClient() {
           </div>
         </div>
       )}
-    </ModalClient>
+    </Modal>
   );
 }
